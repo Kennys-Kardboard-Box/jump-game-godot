@@ -6,7 +6,7 @@
 [ext_resource path="res://source_files/world/camera_follow/script/camera_follow.gd" type="Script" id=4]
 [ext_resource path="res://source_files/world/camera_follow/script/camera.gd" type="Script" id=5]
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 512, 10 )
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -74,7 +74,7 @@ script = ExtResource( 5 )
 position = Vector2( 0, 475 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/Deleter"]
-shape = SubResource( 3 )
+shape = SubResource( 1 )
 
 [node name="Player" type="KinematicBody2D" parent="."]
 position = Vector2( 444.104, 421.422 )
