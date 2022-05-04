@@ -2,9 +2,12 @@ extends KinematicBody2D
 
 
 export var speed = 30.0
-export var jump_impulse = 200.0
-export var gravity = 200.0
-export var max_fall_speed = 400.0
+export var max_jump_height = 96.0
+export var jump_duration = 3.0
+
+onready var gravity = max_jump_height/(2 * pow(jump_duration, 2))
+onready var initial_velocity = -sqrt(2 * max_jump_height * gravity)
+onready var raycast = $RayCast2D
 
 var velocity = Vector2()
 var on_floor = false
@@ -15,10 +18,13 @@ func _ready():
 
 
 func _physics_process(delta):
-	velocity.x = (Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")) * speed
-	if on_floor: # and Input.is_action_just_pressed("ui_up"):
-		velocity.y = -jump_impulse
-	velocity.y = min(velocity.y + (gravity * delta), max_fall_speed)
-	velocity = move_and_slide(velocity, Vector2.UP)
+	var weighted_velocity = Vector2()
+	velocity.y += gravity
+	if on_floor:
+		velocity.y = initial_velocity
+	weighted_velocity = velocity
+	weighted_velocity.x *= speed
+	weighted_velocity = move_and_slide(weighted_velocity)
 	on_floor = is_on_floor()
+	print(on_floor)
 	pass
