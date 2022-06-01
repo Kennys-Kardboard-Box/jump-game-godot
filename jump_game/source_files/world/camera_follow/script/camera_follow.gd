@@ -9,6 +9,7 @@ func _ready():
 
 
 func _physics_process(delta):
-	if follower.global_position.y < global_position.y:
-		global_position.y = follower.global_position.y
+#	if follower.global_position.y < global_position.y:
+#		global_position.y = follower.global_position.y
+	global_position = follower.global_position
 	pass

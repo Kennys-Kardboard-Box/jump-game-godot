@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://asset_files/one_pixel.tres" type="Texture" id=1]
 [ext_resource path="res://source_files/world/player/script/player.gd" type="Script" id=2]
-[ext_resource path="res://source_files/world/floors_and_platforms/floor.tscn" type="PackedScene" id=3]
 [ext_resource path="res://source_files/world/camera_follow/script/camera_follow.gd" type="Script" id=4]
 [ext_resource path="res://source_files/world/camera_follow/script/camera.gd" type="Script" id=5]
 
@@ -35,18 +34,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Floor" parent="." instance=ExtResource( 3 )]
-position = Vector2( 483.109, 548.736 )
-
-[node name="Floor2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 480.739, 407.449 )
-
-[node name="Floor3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 461.668, 246.411 )
-
-[node name="Floor4" parent="." instance=ExtResource( 3 )]
-position = Vector2( 471.668, 94.4109 )
-
 [node name="CameraFollow" type="Node2D" parent="."]
 position = Vector2( 444.104, 421.422 )
 script = ExtResource( 4 )
@@ -59,19 +46,20 @@ remote_path = NodePath("../../Camera2D")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 444.104, 421.422 )
 current = true
+limit_bottom = 1000
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true
 smoothing_enabled = true
 smoothing_speed = 4.0
-drag_margin_left = 1.0
+drag_margin_left = 0.5
 drag_margin_top = 0.45
-drag_margin_right = 1.0
+drag_margin_right = 0.5
 drag_margin_bottom = 1.0
 editor_draw_drag_margin = true
 script = ExtResource( 5 )
 
 [node name="Deleter" type="Area2D" parent="Camera2D"]
-position = Vector2( 0, 475 )
+position = Vector2( 0, 275 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/Deleter"]
 shape = SubResource( 1 )
@@ -84,6 +72,9 @@ __meta__ = {
 "_edit_group_": true
 }
 speed = 300.0
+max_jump_height = 192.0
+float_jump_height = 64.0
+float_jump_duration = 2.0
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
 remote_path = NodePath("../../CameraFollow/Follower")
@@ -99,6 +90,16 @@ shape = SubResource( 2 )
 
 [node name="RayCast2D" type="RayCast2D" parent="Player"]
 position = Vector2( 0, 0.5 )
+scale = Vector2( 0.025, 0.025 )
+cast_to = Vector2( 0, 2 )
+
+[node name="RayCast2D2" type="RayCast2D" parent="Player"]
+position = Vector2( 0.5, 0.5 )
+scale = Vector2( 0.025, 0.025 )
+cast_to = Vector2( 0, 2 )
+
+[node name="RayCast2D3" type="RayCast2D" parent="Player"]
+position = Vector2( -0.5, 0.5 )
 scale = Vector2( 0.025, 0.025 )
 cast_to = Vector2( 0, 2 )
 [connection signal="body_entered" from="Camera2D/Deleter" to="Camera2D" method="_on_Deleter_body_entered"]
